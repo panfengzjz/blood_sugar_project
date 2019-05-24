@@ -9,6 +9,7 @@ class patient():
     def __init__(self, info):
         self.name = info[0]
         self.age = info[1]
+        self.hos_area= info[4]
         self.bld_glu = info[7]
         self.opr_dat = info[8]
         self.opr_tim = info[13]
@@ -61,7 +62,7 @@ def print_excel(test_name, log_list, fileNumber=1):
     wb.save(file_path)
     #wb.save(file_path+'.out'+ os.path.splitext(file_path)[-1])
     print( "END")
-def rate_main(filename, sheetname):
+def rate_main(filename, sheetname, startDate="", endDate="", district=[]):
     fd_excel = xlrd.open_workbook(filename) #打开文件
     table = fd_excel.sheet_by_name(sheetname)    #读取sheet0
     max_row = table.nrows  
@@ -90,6 +91,16 @@ def rate_main(filename, sheetname):
             former=patient(table.row_values(r-1))
             former_day=xlrd.xldate_as_tuple(former.opr_dat, 0)[0:3]
             p_day = xlrd.xldate_as_tuple(p.opr_dat, 0)[0:3]
+            if (startDate != ""):
+                start_date = tuple(map(int, startDate.split("-")))
+                if (start_date > p_day):
+                    continue
+            if (endDate != ""):
+                end_date = tuple(map(int, endDate.split("-")))
+                if (end_date < p_day):
+                    continue
+            if (district != []) and (p.hos_area not in district):
+                continue
             #if (former.name==p.name)and (former_day==p_day)and(former.opr_tim==p.opr_tim):
                 #pass
             #else:
@@ -184,7 +195,8 @@ def rate_main(filename, sheetname):
     #print( "低血糖总数%d,发生在餐前%d，发生在餐后%d，发生在睡前%d"%(total_low,before_low,after_low,night_low))
     
 if __name__ == "__main__":
-    rate_main("wai.xlsx", "Sheet")
+    rate_main("wai-sample.xlsx", "Sheet1", startDate="2018-07-01", endDate="2019-06-30", 
+              district=['11病区', '17病区'])
     
     
  

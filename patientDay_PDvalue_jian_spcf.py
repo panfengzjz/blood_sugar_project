@@ -9,6 +9,7 @@ class patient():
     def __init__(self, info):
         self.name = info[0]
         self.age = info[1]
+        self.hos_area= info[4]
         self.bld_glu = info[7]
         self.opr_dat = info[8]
         self.opr_tim = info[13]
@@ -46,7 +47,7 @@ def print_excel(test_name, log_list, fileNumber=1):
     print( "END")
 
 
-def PDvalue_main_jian_spcf(filename, sheetname):
+def PDvalue_main_jian_spcf(filename, sheetname, startDate="", endDate="", district=[]):
     start_time = time.time()
     fd_excel = xlrd.open_workbook(filename) #打开文件
     table = fd_excel.sheet_by_name(sheetname)    #读取sheet0
@@ -82,6 +83,16 @@ def PDvalue_main_jian_spcf(filename, sheetname):
         former_day=xlrd.xldate_as_tuple(former.opr_dat, 0)[0:3]
         
         p_day = xlrd.xldate_as_tuple(p.opr_dat, 0)[0:3]
+        if (startDate != ""):
+            start_date = tuple(map(int, startDate.split("-")))
+            if (start_date > p_day):
+                continue
+        if (endDate != ""):
+            end_date = tuple(map(int, endDate.split("-")))
+            if (end_date < p_day):
+                continue
+        if (district != []) and (p.hos_area not in district):
+            continue
         
         if (former.name==p.name)and (former_day==p_day):
             
@@ -134,4 +145,5 @@ def PDvalue_main_jian_spcf(filename, sheetname):
     print("the project costs: ", time.time()-start_time)
         
 if __name__ == "__main__":
-    PDvalue_main_jian_spcf("huge.xlsx", "jian")
+    PDvalue_main_jian_spcf("huge.xlsx", "jian", startDate="2018-07-01", endDate="2019-06-30",
+                           district=['2病区', '4病区'])
