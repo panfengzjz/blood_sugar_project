@@ -43,7 +43,7 @@ class patient():
         #self.age = info[1]
         #self.gender = info[2]
         #self.hos_num = info[3]
-        #self.hos_area= info[4]
+        self.hos_area= info[4]
         #self.hos_bed = info[5]
         #self.pat_num = info[6]
         self.bld_glu = info[7]
@@ -108,7 +108,7 @@ def find_pname_info_avg(p, current_day, j, max_row, denominator, numerator):
             break
     return (j, denominator, numerator)  #当病人改变，或已经大于current_day，就return
         
-def jian_main(filename, sheetname):
+def jian_main(filename, sheetname, startDate="", endDate="", district=[]):
     cur_time = time.time()
     fd_excel = xlrd.open_workbook(filename) #打开文件
     print( "Load excel time used is: ", time.time()-cur_time)
@@ -135,9 +135,18 @@ def jian_main(filename, sheetname):
             if(p.name != former.name):
                 patient_number+=1   #寻找新的病人
                 first_day = xlrd.xldate_as_tuple(p.opr_dat, 0)[0:3] #只允许加载一次第一天
+                if (startDate != ""):
+                    start_date = tuple(map(int, startDate.split("-")))
+                    if (start_date > first_day):
+                        continue
+                if (endDate != ""):
+                    end_date = tuple(map(int, endDate.split("-")))
+                    if (end_date < first_day):
+                        continue
+                if (district != []) and (p.hos_area not in district):
+                    continue
                 current_day = calculate_current_day(first_day, i)
-                #print "The", i, "loop: first day is ", first_day
-                #print current_day
+                #print( current_day)
             else:
                 continue    #如果上下两条名字相同，则跳过
             
@@ -157,4 +166,5 @@ def jian_main(filename, sheetname):
     print_excel("分母",arrayd,2)
 
 if __name__ == "__main__":
-    jian_main("jian.xlsx", "Sheet")
+    jian_main("jian.xlsx", "Sheet", startDate="2018-07-01", endDate="2019-06-30", 
+              district=['2病区', '4病区'])
