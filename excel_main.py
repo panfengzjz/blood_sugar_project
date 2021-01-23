@@ -11,18 +11,18 @@ from recordFreq import recordFreq_main      # file 5 每人测的条数。通用
 
 if __name__ == "__main__":
     excelname="huge.xlsx"
-    sheetname="nei"
+    sheetname="jian"
     #分时刻
-    #neiwai_main(excelname, sheetname)
-    PDvalue_main(excelname, sheetname, startDate="2017-06-01", endDate="2017-06-31")
-    #PDvalue_main_jian(excelname, sheetname)    
+    neiwai_main(excelname, sheetname)
+    PDvalue_main(excelname, sheetname)
+    PDvalue_main_jian(excelname, sheetname)    
     divide_main("patientday.xls", "Sheet1")
     
     #不分时刻
-    #jian_main(excelname, sheetname)
-    #PDvalue_main_jian_spcf(excelname, sheetname)
-    #divide_main_jian("patientday.xls", "Sheet1")
-    
+    jian_main(excelname, sheetname)
+    PDvalue_main_jian_spcf(excelname, sheetname)
+    divide_main_jian("patientday.xls", "Sheet1")
     #通用
-    #rate_main(excelname, sheetname)
-    #recordFreq_main(excelname, sheetname)
+    rate_main(excelname, sheetname)
+    recordFreq_main(excelname, sheetname)
+

@@ -1,19 +1,20 @@
 #coding: utf-8
 import openpyxl
 import time
+
 def ward_classify(ward):
     res = ""
-    if (ward=="10病区" or ward=="11病区"or ward=="12病区"or ward=="16病区"or ward=="17病区"or ward=="18病区"or ward=="1病区"or 
-        ward=="2病区"or ward=="34病区"or ward=="35病区"or ward=="37病区"or ward=="3病区"or ward=="44病区"or ward=="45病区"or 
-        ward=="46病区"or ward=="47病区"or ward=="4病区"or ward=="5病区"or ward=="6病区"or ward=="7病区"or ward=="8病区"or ward=="9病区"or ward=="日间病部"
-        or ward=="十三病区"or ward=="十四病区"):
+    if (ward=="四十七病区" or ward=="八病区"or ward=="二病区"or ward=="九病区"or ward=="六病区"or ward=="七病区"or ward=="三病区"or 
+        ward=="三十七病区"or ward=="三十三病区"or ward=="三十四病区"or ward=="三十五病区"or ward=="十八病区"or ward=="十病区"or ward=="十二病区"or 
+        ward=="十六病区"or ward=="十七病区"or ward=="十三病区"or ward=="十四病区"or ward=="十一病区"or ward=="四病区"or ward=="四十八病区"or ward=="四十九病区"or ward=="四十六病区"
+        or ward=="四十七病区"or ward=="四十四病区" or ward=="外科日间病部" or ward=="五病区产科" or ward=="五病区妇科" or ward=="五十一病区"):
         res="wai"
-    elif (ward=="19病区" or ward=="20病区"or ward=="22病区"or ward=="25病区"or ward=="24病区"or ward=="27病区"or ward=="28病区"or ward=="29病区"
-          or ward=="30病区"or ward=="31病区"or ward=="41病区"or ward=="42病区"or ward=="43病区" or ward=="二十一病区"):
+    elif (ward=="二十八病区" or ward=="二十病区"or ward=="二十九病区"or ward=="二十七病区"or ward=="二十一病区"or ward=="六十八病区"or ward=="六十病区"or ward=="六十九病区"
+          or ward=="廿六病区"or ward=="廿四病区"or ward=="廿五病区"or ward=="三十八病区"or ward=="三十病区" or ward=="三十二病区A" or ward=="三十二病区B" or ward=="三十九病区" or ward=="三十六病区" or ward=="三十一病区" or ward=="十九病区" or ward=="四十病区" or ward=="四十二病区" or ward=="四十三病区" or ward=="四十一病区" or ward=="五十病区" or ward=="五十二病区" or ward=="五十六病区" or ward=="五十三病区" or ward=="一病区" or ward=="周转三部" or ward=="周转四部"):
         res="nei"
-    elif (ward=="外监" or ward=="急ICU"or ward=="肝外监"or ward=="心外监"):
+    elif (ward=="（东院）肝外监护室" or ward=="（东院）心外监护室"or ward=="（东院）心脏内科监护室"or ward=="呼吸内科监护室" or ward=="急诊ICU" or ward=="神经内科监护室" or ward=="外科监护室" or ward=="外科监护室A "    ):
         res="jian"
-    elif (ward=="23病区" ):
+    elif (ward=="二十三病区" ):
         res="endo"
     return res
 
@@ -90,7 +91,7 @@ def ward_exchange(src_name, ret_name1,ret_name2,ret_name3,ret_name4):
 
 if __name__ == "__main__":
     start=time.time()
-    src_name = "new-huge-from201801.xlsx"
+    src_name = "new-huge.xlsx"
     ret_name1 = "wai.xlsx"   
     ret_name2 = "nei.xlsx"  
     ret_name3 = "jian.xlsx" 

@@ -5,6 +5,8 @@ import xlwt
 from xlutils.copy import copy
 import time
 
+from dayCount_print import print_excel
+
 class patient():
     def __init__(self, info):
         self.name = info[0]
@@ -22,30 +24,6 @@ def timepoint(p):
     else:
         timetype=3
     return timetype
-
-def print_excel(test_name, log_list, fileNumber=1):
-    START_ROW=1 # 0 based (subtract 1 from excel row number)  
-    if (fileNumber == 1):
-        file_path = "./shulie.xls"
-    elif (fileNumber == 2):
-        file_path = "./bianliang.xls"
-    elif (fileNumber == 3):
-        file_path = "./patientday.xls"
-    
-    
-    rb=xlrd.open_workbook(file_path)  
-    r_sheet=rb.sheet_by_index(0)# read only copy to introspect the file  
-    wb=copy(rb)# a writable copy (I can't read values out of this, only write to it)  
-    w_sheet=wb.get_sheet(0)# the sheet to write to within the writable copy
-    
-    w_sheet.write(0, r_sheet.ncols, test_name)
-    for row_index in range(0, len(log_list)):
-        w_sheet.write(row_index+1, r_sheet.ncols, log_list[row_index])
-    
-    wb.save(file_path)
-    #wb.save(file_path+'.out'+ os.path.splitext(file_path)[-1])
-    print( "END")
-
 
 def PDvalue_main(filename, sheetname, startDate="", endDate="", district=[]):
     start_time = time.time()
@@ -116,7 +94,7 @@ def PDvalue_main(filename, sheetname, startDate="", endDate="", district=[]):
             end_date = tuple(map(int, endDate.split("-")))
             if (end_date < p_day):
                 continue
-        if (district != []) and (p.hos_area not in district):
+        if (district != []) and (p.hos_area in district):
             continue
         
         if (former.name==p.name)and (former_day==p_day):
@@ -171,7 +149,8 @@ def PDvalue_main(filename, sheetname, startDate="", endDate="", district=[]):
     
             if n1!=0 and n2!=0:
                 mall +=1
-                if average1>=4.4 and average1<=8 and average2>=6 and average2<=10:
+                if average1>=4.4 and average1<=7.8 and average2>=6.1 and average2<=10:
+                #if average1>=4.4 and average1<=10 and average2>=6.1 and average2<=13.9:
                     rall +=1
                 if n1==n1r and n2==n2r:
                     raall +=1                
@@ -262,5 +241,5 @@ def PDvalue_main(filename, sheetname, startDate="", endDate="", district=[]):
     print("the project costs: ", time.time()-start_time)
         
 if __name__ == "__main__":
-    PDvalue_main("wai-sample.xlsx", "Sheet1", startDate="2018-07-01", endDate="2019-06-30", 
-                 district=['2病区', '4病区'])
+    PDvalue_main("total.xlsx", "nei", #startDate="2018-07-01", endDate="2019-06-30", 
+                 district=['廿六病区','三十五病区', '三十六病区','三十八病区' , '三十九病区', '四十病区', '四十一病区'])

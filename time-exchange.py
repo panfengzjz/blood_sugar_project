@@ -56,19 +56,19 @@ def calc_time_diff(excel_time):
     mins = excel_time.minute
     time_num = hour*60 + mins
     res = ""
-    if (abs(time_num - 6*60) < 60):
+    if (4*60 <= time_num < 7*60+30):        # from 4:00~7:30
         res = "6点"
-    elif (abs(time_num - 8*60-30) < 60):
+    elif (7*60+30 <= time_num < 9*60+30):   # from 7:30~9:30
         res = "8点30"
-    elif (abs(time_num - 10*60-30) < 60):
+    elif (9*60+30 <= time_num < 12*60):     # from 9:30~12:00
         res = "10点30"
-    elif (abs(time_num - 13*60) < 60):
+    elif (12*60 <= time_num < 15*60+30):    # from 12:00~15:30
         res = "13点"
-    elif (abs(time_num - 16*60-30) < 60):
+    elif (15*60+30 <= time_num < 18*60):    # from 15:30~18:00
         res = "16点30"
-    elif (abs(time_num - 19*60) < 60):
+    elif (18*60 <= time_num < 20*60):       # from 18:00~20:00
         res = "19点"
-    elif (abs(time_num - 21*60) < 60):
+    elif (20*60 <= time_num < 24*60):       # from 20:00~24:00
         res = "21点"
     return res
 
@@ -103,7 +103,7 @@ def time_exchange(src_name, ret_name):
     print("功能完成")
 
 if __name__ == "__main__":
-    fileName = "新-全院血糖监测原始数据-列改了顺序.xlsx"
+    fileName = "test.xlsx"
     reslName = "new-huge.xlsx"   #两次跑结果会覆盖
     #patientList = make_list(fileName)   #这次生成一个数组，方便pop
     #reorder_excel(fileName, reslName)
