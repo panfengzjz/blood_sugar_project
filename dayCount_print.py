@@ -14,4 +14,4 @@ def print_excel(test_name, log_list, fileNumber=1):
     if os.path.exists(file_path):
         old_df = pd.read_excel(file_path)
         cur_df = pd.concat([old_df, cur_df], axis=1)
-    cur_df.to_excel(file_path, index=False, header=False)
+    cur_df.to_excel(file_path, index=False)
